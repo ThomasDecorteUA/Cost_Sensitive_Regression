@@ -49,7 +49,7 @@ Outputs:
 
 To execute an example of the procedure based on the KC House dataset (see: https://geodacenter.github.io/data-and-lab//KingCounty-HouseSales2015/) run the following line:
 ```
- python example.py --b=1 --a=10
+ python example.py --b=1 --a=10 --type="linlin"
 ```
 
 
