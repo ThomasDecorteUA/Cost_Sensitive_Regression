@@ -35,9 +35,9 @@ To run the below example, also the following is needed:
 
 ```
 Options :
-  --type	                 # Type of cost function applied to dataset. Can be: LinLin (linlin), QuadQuad (quadquad), LinEx (lin_ex) or ExLin (ex_lin) 
-	--a	                     # Parameter for cost penalizations of overpredictions
-	--b                      # Parameter for cost penalizations of underpredictions
+  --type	           # Type of cost function applied to dataset. Can be: LinLin (linlin), QuadQuad (quadquad), LinEx (lin_ex) or ExLin (ex_lin) 
+  --a	                   # Parameter for cost penalizations of overpredictions
+  --b                      # Parameter for cost penalizations of underpredictions
 ```
 
 Outputs:
