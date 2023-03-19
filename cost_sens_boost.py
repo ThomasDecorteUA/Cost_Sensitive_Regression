@@ -1,3 +1,34 @@
+#Rescale function 
+def rescale(df):
+    standard_deviation_of_float_columns = []
+    df_rescaled = df.copy()
+    dataTypeSeries = df[features].dtypes
+    float_columns = dataTypeSeries[dataTypeSeries==float].index
+    for column in df.columns:
+        if column in float_columns:
+            if column == "const":
+                standard_deviation_of_float_columns.append(1)
+            else:
+                standard_deviation_of_float_columns.append(df[column].std())
+                df_rescaled[column] = df[column]/df[column].std()
+        else:
+            standard_deviation_of_float_columns.append(1)
+    return df_rescaled,standard_deviation_of_float_columns
+
+#Function to calculate convergence
+def cost_function(residual,typecost,a,b):
+        
+    if typecost == 'linlin':
+        cost = np.where(residual >= 0, a*(np.abs(residual)), b*(np.abs(residual)))
+    if typecost == 'quadquad':
+        cost = np.where(residual >= 0, a*(residual**2), b*(residual**2))
+    if typecost == 'lin_ex':
+        cost_full_function = b*(np.exp(a*residual)-a*residual-1)
+        cost = np.where(cost_full_function>1e+6,1e+6,cost_full_function)
+        
+    mean_cost = np.mean(cost)
+    return mean_cost
+
 #IRLS function
 def IRLS(typecost, X , initial_residuals , a , b, **kwargs):
     
