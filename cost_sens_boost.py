@@ -37,7 +37,6 @@ def IRLS(typecost, X , initial_residuals , a , b, **kwargs):
             s_residuals = initial_residuals.std()
             pred = np.zeros(n)
             pred = pred.reshape(n, 1)
-            s_residuals = 1
         else:
             pred_list = X @ Beta
             pred = np.array(pred_list)
