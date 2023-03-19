@@ -1,4 +1,4 @@
-from cost_sens_boost import IRLS
+import cost_sens_boost
 import pandas as pd
 import statsmodels.api as sm
 import lightgbm as lgb
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     light_gbm.fit(df[features], df[target_variable])
     pred_train = light_gbm.predict(df[features])
     res_train = pred_train - df[target_variable]
-    beta,post_hoc_cost,initial_cost = IRLS(args.type,df[features],res_train,args.a,args.b)
+    beta,post_hoc_cost,initial_cost = cost_sens_boost.IRLS(args.type,df[features],res_train,args.a,args.b)
     print("The below costs and One-Step Boosting algorithm is run using cost function",args.type, "with costs:"
           , args.a,"/",args.b)
     print("Initial average misprediction cost: ", initial_cost)
