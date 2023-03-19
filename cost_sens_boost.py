@@ -57,12 +57,6 @@ def IRLS(typecost, X , initial_residuals , a , b, **kwargs):
             cost_full_function = b*(np.exp(a*residuals_rescaled)-a*residuals_rescaled-1)
             cost = np.where(cost_full_function>1e+6,1e+6,cost_full_function)
             weights = np.where(cost==1e+6,0,weights_full_function)
-        if typecost == 'ex_lin':
-            residuals_rescaled[residuals_rescaled==0] = 0.0000000000001
-            weights_full_function = (b*a-b*a*(np.exp(-a*residuals_rescaled)))/residuals_rescaled
-            cost_full_function = b*(np.exp(-a*residuals_rescaled)+a*residuals_rescaled-1)
-            cost = np.where(cost_full_function>1e+6,1e+6,cost_full_function)
-            weights = np.where(cost==1e+6,0,weights_full_function)
                 
         #We calculate the sqrt of the weigths in order to transform the X and Y matrices
         sqrt_wi = (np.sqrt(weights))
