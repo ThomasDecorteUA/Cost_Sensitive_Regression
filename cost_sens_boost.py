@@ -1,5 +1,9 @@
-#Rescale function 
-def rescale(df):
+import statsmodels
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+#Rescale function
+def rescale(df,features):
     standard_deviation_of_float_columns = []
     df_rescaled = df.copy()
     dataTypeSeries = df[features].dtypes
@@ -30,18 +34,22 @@ def cost_function(residual,typecost,a,b):
         cost = np.where(cost_full_function>1e+6,1e+6,cost_full_function)
         
     mean_cost = np.mean(cost)
+
     return mean_cost
 
 #IRLS function
-def IRLS(typecost, X , initial_residuals , a , b, **kwargs):
+def IRLS(typecost, X , features , initial_residuals , a , b, **kwargs):
     
     #Set initial arguments + initial printout + initial cost calculation
     np.seterr(all='ignore')
     scale = kwargs.get('scale', True)
     n_iter = kwargs.get('n_iter', 1000)
     epsilon = kwargs.get('epsilon', 0.00001)
-        
-    cost_initial = cost_function(initial_residuals,typecost,a,b)
+
+    try:
+        cost_initial = cost_function(initial_residuals,typecost,a,b)
+    except Exception as e:
+        print("An error occured during the calculation of the costs:",e)
     
     #Add in intercept column + get dimensions of X matrix
     X = statsmodels.tools.tools.add_constant(X, prepend=True, has_constant='skip')
@@ -51,7 +59,7 @@ def IRLS(typecost, X , initial_residuals , a , b, **kwargs):
     #Rescaling + saving the standard deviations for rescaling of parameters later on
     if scale == True:
         X_save = X.copy()
-        X,X_std_scores = rescale(X)
+        X,X_std_scores = rescale(X,features)
         X_std_scores = np.array(X_std_scores)
     
     #Initialize beta vector (always start from 0 so from predictions of original model)
@@ -65,9 +73,8 @@ def IRLS(typecost, X , initial_residuals , a , b, **kwargs):
     #Start of the iteration
     for i in range(0, n_iter):
         #In the first iteration we use the residuals of the original model
-        #After that we obtain residuals from: initial_residuals - predictions
+        #After that we obtain residuals from: predictions - initial_residuals
         if i == 0:
-            residuals = initial_residuals.copy()
             s_residuals = initial_residuals.std()
             pred = np.zeros(n)
             pred = pred.reshape(n, 1)
@@ -129,7 +136,11 @@ def IRLS(typecost, X , initial_residuals , a , b, **kwargs):
                 if previous_convergence_costs - costs_convergence>0:
                     Best_Beta = Beta.copy()
             break
-            
+
+    if i == n_iter:
+        print("WARNING: The maximum number of iterations was reached, indicating that the algorithm has not converged yet!!")
+        print("WARNING: Please proceed with care!!")
+
     if scale == True:
         Best_Beta = Best_Beta/X_std_scores
         X = X_save
@@ -138,7 +149,14 @@ def IRLS(typecost, X , initial_residuals , a , b, **kwargs):
     pred_list = X @ Best_Beta
     predictions = np.array(pred_list)
     predictions.shape = [n ,1]
+
+
     final_residuals_post_hoc_model = predictions - initial_residuals
-    mean_cost_post_hoc = cost_function(final_residuals_post_hoc_model,typecost,a,b)
+
+    try:
+        mean_cost_post_hoc = cost_function(final_residuals_post_hoc_model,typecost,a,b)
+    except Exception as e:
+        print("An error occured during the calculation of the costs:",e)
+
     
     return Best_Beta,mean_cost_post_hoc,cost_initial
