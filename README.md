@@ -45,6 +45,9 @@ Outputs:
    - Coefficients of the boosting step found by iteratively least squares based on the given input
    - Post-hoc average misprediction cost
 
+## Datasets
+The datasets showcased in the paper are included in this repository, namely  Abalone, Bank (8FM), House (8L), and KC House. The first three of these datasets are made available on the DELVE\footnote{https://www.cs.toronto.edu/~delve/data/datasets.html} (Data for Evaluating Learning in Valid Experiments) repository of the University of Toronto or on the UCI repository\footnote{https://archive.ics.uci.edu/ml/datasets.php}. The last dataset, KC House, is made available by the  Center for Spatial Data Science\footnote{https://geodacenter.github.io/data-and-lab//KingCounty-HouseSales2015/} at the University of Chicago.
+
 ### Example usage
 
 To execute an example of the procedure based on the KC House dataset (see: https://geodacenter.github.io/data-and-lab//KingCounty-HouseSales2015/) run the following line:
