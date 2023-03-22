@@ -3,7 +3,7 @@
 ### Authors: Thomas Decorte, Tim Verdonck, Jakob Raymaekers
 
 ## Introduction
-The Interpretable Cost-Sensitive Regression through One-Step Boosting is a post-hoc cost-sensitive regression method to 
+The Interpretable Cost-Sensitive Regression through One-Step Boosting, the OSB algorithm, is a post-hoc cost-sensitive regression method to 
 account for an asymmetric cost structure in regression problems. In most practical prediction problems, 
 the different types of prediction errors are not equally costly. These regressions are typically characterized by an asymmetric
 cost structure, where over- and underpredictions of a similar magnitude face vastly different costs.
