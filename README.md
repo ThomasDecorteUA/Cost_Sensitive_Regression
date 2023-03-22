@@ -1,4 +1,4 @@
-# Interpretable Cost-Sensitive Regression through One-Step Boosting
+# Interpretable Cost-Sensitive Regression through One-Step Boosting (OSB)
 
 ### Authors: Thomas Decorte, Tim Verdonck, Jakob Raymaekers
 
