@@ -17,8 +17,7 @@ interpretable through bootstrapping, enabling decision makers to distinguish imp
 for cost-sensitivity as well as facilitating statistical inference. Three different cost functions are implemented to 
 showcase the algorithm. 
 
-For more information see:
-
+For more information see: https://www.sciencedirect.com/science/article/abs/pii/S0167923623000994 
 
 ## Dependencies
 
